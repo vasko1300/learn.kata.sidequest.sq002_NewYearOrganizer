@@ -1,17 +1,19 @@
 package ru.vasko1300.service;
 
-import ru.vasko1300.factory.BeanFactory;
+import ru.vasko1300.annotation.Inject;
+import ru.vasko1300.annotation.PostConstruct;
 import ru.vasko1300.model.Gift;
 import ru.vasko1300.model.Person;
-import ru.vasko1300.service.impl.CardPaymentSystem;
-import ru.vasko1300.service.impl.PostDeliverySystem;
-import ru.vasko1300.service.impl.SmartGiftChooseHelper;
 
 public class GiftPresenter {
 
-    private GiftChooseHelper giftChooseHelper = BeanFactory.getInstance().getBean(GiftChooseHelper.class);
-    private PaymentSystem paymentSystem = BeanFactory.getInstance().getBean(PaymentSystem.class);
-    private DeliverySystem deliverySystem = BeanFactory.getInstance().getBean(DeliverySystem.class);
+    @Inject private GiftChooseHelper giftChooseHelper;
+    @Inject private PaymentSystem paymentSystem;
+    @Inject private DeliverySystem deliverySystem;
+
+    @PostConstruct public void postConstruct() {
+        System.out.println("GiftPresenter has been initialized!");
+    }
 
     public void present(Person person) {
         Gift gift = giftChooseHelper.choose(person);
